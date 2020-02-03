@@ -7,7 +7,7 @@ import sys
 
 # My solution:
 # Time = O(n); Space = O(n) 
-def my_solution():
+def my_solution(orig_arr, num_elements, rotate):
     new_arr = []
     for i in range(0, num_elements):
         if (num_elements > i+rotate):
@@ -20,7 +20,28 @@ def my_solution():
 # Time = O(n); Space = O(d) - using temp_arr
 # Time = O(n*d); Space = O(1) - using left_rotator
 # Time = O(n); Space = O(1) - using left rotator with gcd
-#def gfg_solution():
+def gfg_solution(orig_arr, num_elements, rotate):
+    rotate = rotate % num_elements
+    gcd_value = gcd(rotate, num_elements)
+    for i in range(gcd_value):
+        temp = orig_arr[i]
+        j = i
+        while 1:
+            k = j+rotate
+            if k>=num_elements:
+                k = k-num_elements
+            if k == i:
+                break
+            orig_arr[j] = orig_arr[k]
+            j = k
+        orig_arr[j] = temp
+    print (orig_arr)
+
+def gcd(a, b):
+    if b == 0:
+        return a;
+    else:
+        return gcd(b, a%b)
 
 
 # Main Program
@@ -39,9 +60,9 @@ if (len(sys.argv) > 1):
     rotate = int(input("Enter the number by which you want to rotate the array: "))
 
     if (args.mine == True):
-        my_solution()
-    #elif (args.gfg = True):
-    #    gfg_solution()
+        my_solution(orig_arr, num_elements, rotate)
+    elif (args.gfg == True):
+        gfg_solution(orig_arr, num_elements, rotate)
     else:
         print ("Enter the right argument")
 else:
